@@ -16,7 +16,7 @@ def parse_args():
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-s', '--search', dest='search', type=str,
 						help='Contenuto da cercare')
-	parser.add_argument('-d', '--download', dest='download', type=int,
+	parser.add_argument('-d', '--download', dest='download', nargs='+', type=int,
 						help='Topic del file da scaricare')
 	return parser.parse_args()
 
@@ -65,4 +65,5 @@ if __name__ == '__main__':
 
 	if args.download:
 		topic = args.download
-		retrieve_magnet(topic)
+		for t in topic:
+			retrieve_magnet(t)

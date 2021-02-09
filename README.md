@@ -15,11 +15,18 @@ TOPIC    TITOLO    DESCRIZIONE    DIMENSIONE
 
 
 ### Download
-Per effettuare un download basta utilizzare il topic che si è trovato dopo la fase di ricerca
+Per effettuare un download basta utilizzare il topic che si è trovato dopo la fase di ricerca (per fare più download separare con uno spazio i topic)
 
 ```console
 $ python3 tnt.py -d 1
 
 magnet:/?xt=urn:btih:...
+```
+
+```console
+$ python3 tnt.py -d 1 2
+
+magnet:/?xt=urn:btih:1...
+magnet:/?xt=urn:btih:2...
 ```
 Ed ecco il magnet da utilizzare

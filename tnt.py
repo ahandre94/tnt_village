@@ -15,9 +15,9 @@ CONV = 2**10
 def parse_args():
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-s', '--search', dest='search', type=str,
-						help='Element to search')
+						help='Contenuto da cercare')
 	parser.add_argument('-d', '--download', dest='download', type=int,
-						help='Topic of the element to download')
+						help='Topic del file da scaricare')
 	return parser.parse_args()
 
 
@@ -53,7 +53,7 @@ def retrieve_magnet(topic):
 		except:
 			print('Something went wrong')
 	else:
-		print('Topic not found')
+		print('Topic non trovato')
 
 
 if __name__ == '__main__':

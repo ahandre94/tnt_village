@@ -27,7 +27,6 @@ class QbPrevious(Qb):
 
     def download_from_link(self, link):
         if self.SID is None:
-            print('Fai il login prima!')
             return False
         data = {'urls': link}
         cookies = {'SID': self.SID}

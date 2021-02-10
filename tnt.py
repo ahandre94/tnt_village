@@ -21,22 +21,33 @@ def parse_args():
 	return parser.parse_args()
 
 
+def _convert_dimension(dimension):
+	c = 0
+	while dimension > CONV:
+		dimension /= CONV
+		c += 1
+	return f'{dimension:.2f} {UNIT[c]}'
+
+
 def search(query):
 	query = query.lower()
+	res = []
 	with open(TNT_DUMP) as f:
 		r = csv.reader(f)
 		fields = next(r)
-		print(f'TOPIC\tTITOLO\tDESCRIZIONE\tDIMENSIONE')
 		for elem in r:
-			dim = int(elem[fields.index('DIMENSIONE')])
-			c = 0
-			while dim > CONV:
-				dim /= CONV
-				c += 1
 			title = elem[fields.index('TITOLO')]
 			description = elem[fields.index('DESCRIZIONE')]
 			if query in title.lower() or query in description.lower():
-				print(f"{elem[fields.index('TOPIC')]}\t{title}\t{description}\t{dim:.2f} {UNIT[c]}")
+				dimension = _convert_dimension(int(elem[fields.index('DIMENSIONE')]))
+				res.append((elem[fields.index('TOPIC')], title, description, dimension))
+	if res:
+		res.sort(key=lambda item: (item[1].lower(), item[2].lower()))
+		print(f'TOPIC\tTITOLO\tDESCRIZIONE\tDIMENSIONE')
+		for topic, title, description, dimension in res:
+			print(f'{topic}\t{title}\t{description}\t{dimension}')
+	else:
+		print('Contenuto non trovato')
 
 
 def retrieve_magnet(topic):

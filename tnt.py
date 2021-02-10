@@ -4,6 +4,7 @@ import csv
 import requests
 
 from bs4 import BeautifulSoup
+from qbittorrent import init_qb
 
 
 TNT_DUMP = 'dump_release_tntvillage_2019-08-30.csv'
@@ -18,6 +19,21 @@ def parse_args():
 						help='Contenuto da cercare')
 	parser.add_argument('-d', '--download', dest='download', nargs='+', type=int,
 						help='Topic del file da scaricare')
+	parser.add_argument('-qb', '--qbittorrent', dest='qb', action='store_true',
+						help='Usa qBittorrent')
+	parser.set_defaults(qb=False)
+	parser.add_argument('-a', '--ip-address', dest='address', type=str,
+						help='Indirizzo IP per accedere a qBittorrent (defualt: 127.0.0.1)')
+	parser.set_defaults(address='127.0.0.1')
+	parser.add_argument('-p', '--port', dest='port', type=int,
+						help='Porta per accedere a qBittorrent  (defualt: 8080)')
+	parser.set_defaults(port=8080)
+	parser.add_argument('-u', '--username', dest='username', type=str,
+						help='Username per accedere a qBittorrent (defualt: admin)')
+	parser.set_defaults(username='admin')
+	parser.add_argument('-pw', '--password', dest='password', type=str,
+						help='Password per accedere a qBittorrent  (defualt: adminadmin)')
+	parser.set_defaults(password='adminadmin')
 	return parser.parse_args()
 
 
@@ -68,7 +84,7 @@ def retrieve_magnet(topic):
 			magnet = table.find('a', title='Magnet link').get('href')
 			index = magnet.find('magnet')
 			link = magnet[index:]
-			print(link)
+			return link
 		except:
 			print('Something went wrong')
 	else:
@@ -84,5 +100,20 @@ if __name__ == '__main__':
 
 	if args.download:
 		topic = args.download
+
+		qb = None
+		if args.qb:
+			qb = init_qb(args.address, args.port)
+			log = qb.login(args.username, args.password)
+			if not log:
+				print('Credenziali errate')
+				sys.exit()
+
 		for t in topic:
-			retrieve_magnet(t)
+			link = retrieve_magnet(t)
+			print(link)
+			if qb is not None:
+				qb.download_from_link(link)
+		
+		if qb is not None:
+			qb.logout()

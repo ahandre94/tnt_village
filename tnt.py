@@ -42,7 +42,15 @@ def search(query):
 				dimension = _convert_dimension(int(elem[fields.index('DIMENSIONE')]))
 				res.append((elem[fields.index('TOPIC')], title, description, dimension))
 	if res:
-		res.sort(key=lambda item: (item[1].lower(), item[2].lower()))
+		res.sort(
+			key=lambda item: (
+				item[1].lower(),
+				item[2].lower(),
+				list(UNIT.keys())[list(UNIT.values()).index(item[3].split()[1])],
+				item[3].split()[0],
+				item[0]
+			)
+		)
 		print(f'TOPIC\tTITOLO\tDESCRIZIONE\tDIMENSIONE')
 		for topic, title, description, dimension in res:
 			print(f'{topic}\t{title}\t{description}\t{dimension}')

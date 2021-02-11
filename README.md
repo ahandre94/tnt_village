@@ -1,5 +1,5 @@
 # TNTVillage
-Cerca tra le release di TNTVillage e recupera il magnet del file che desideri
+Cerca tra le release di TNTVillage, recupera il magnet del file che desideri e sfrutta l'integrazione con qBittorrent
 
 
 ### Ricerca
@@ -43,4 +43,3 @@ Di default l'username è `admin`, la password `adminadmin`, l'indirizzo IP `127.
 ```console
 $ python3 tnt.py -d 1 -qb 
 ```
-Per ora sono supportate solo le versioni di qBittorrent dalla v3.2.0 alla v4.0.4

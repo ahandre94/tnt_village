@@ -1,5 +1,3 @@
-import requests
-
 from .qb import Qb
 
 
@@ -8,27 +6,18 @@ class QbPrevious(Qb):
 
     def __init__(self, address='127.0.0.1', port=8080):
         super().__init__(address, port)
-        self.SID = None
 
     def login(self, username='admin', password='adminadmin'):
         data = {'username': username, 'password': password}
-        r = requests.post(f'{self.url}/login', data=data)
-        if r.text == 'Ok.':
-            cookies = r.cookies.get_dict()
-            self.SID = cookies['SID']
-            return True
-        return False
+        r = self.session.post(f'{self.url}/login', data=data)
+        return r.text == 'Ok.'
 
     def logout(self):
-        if self.SID is None:
-            return False
-        cookies = {'SID': self.SID}
-        r = requests.post(f'{self.url}/logout', cookies=cookies)
+        r = self.session.post(f'{self.url}/logout')
 
     def download_from_link(self, link):
-        if self.SID is None:
-            return False
+        if isinstance(link, list):
+            link = '\n'.join(link)
         data = {'urls': link}
-        cookies = {'SID': self.SID}
-        r = requests.post(f'{self.url}/command/download', data=data, cookies=cookies)
+        r = self.session.post(f'{self.url}/command/download', data=data)
         return r.text == 'Ok.'

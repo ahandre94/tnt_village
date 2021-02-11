@@ -32,7 +32,7 @@ magnet:/?xt=urn:btih:2...
 Ed ecco il magnet da utilizzare
 
 ### qBittorrent
-Per scaricare direttamente utilizzando qBittorrent, attivare l'interfaccia web (Preferenze -> Interfaccia web)
+Per scaricare direttamente utilizzando qBittorrent, attivare l'interfaccia web (Preferenze -> Interfaccia web). È supportata sia la versione corrente (v4.1+) che la precedente (v3.2.0 - v4.0.4)
 
 ```console
 $ python3 tnt.py -d 1 -qb -u 'admin' -pw 'adminadmin' -a '127.0.0.1' -p 8080

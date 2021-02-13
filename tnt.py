@@ -48,28 +48,31 @@ def _convert_dimension(dimension):
 def search(query):
 	query = query.lower()
 	res = []
-	with open(TNT_DUMP) as f:
+	with open(TNT_DUMP, encoding='utf-8') as f:
 		r = csv.reader(f)
 		fields = next(r)
 		for elem in r:
 			title = elem[fields.index('TITOLO')]
 			description = elem[fields.index('DESCRIZIONE')]
 			if query in title.lower() or query in description.lower():
+				topic = elem[fields.index('TOPIC')]
+				hash = elem[fields.index('HASH')]
 				dimension = _convert_dimension(int(elem[fields.index('DIMENSIONE')]))
-				res.append((elem[fields.index('TOPIC')], title, description, dimension))
+				res.append((topic, hash, title, description, dimension))
 	if res:
 		res.sort(
 			key=lambda item: (
-				item[1].lower(),
 				item[2].lower(),
-				list(UNIT.keys())[list(UNIT.values()).index(item[3].split()[1])],
-				item[3].split()[0],
-				item[0]
+				item[3].lower(),
+				list(UNIT.keys())[list(UNIT.values()).index(item[4].split()[1])],
+				item[4].split()[0],
+				item[0],
+				item[1]
 			)
 		)
-		print(f'TOPIC\tTITOLO\tDESCRIZIONE\tDIMENSIONE')
-		for topic, title, description, dimension in res:
-			print(f'{topic}\t{title}\t{description}\t{dimension}')
+		print(f'TOPIC\tHASH\tTITOLO\tDESCRIZIONE\tDIMENSIONE')
+		for topic, hash, title, description, dimension in res:
+			print(f'{topic}\t{hash}\t{title}\t{description}\t{dimension}')
 	else:
 		print('Contenuto non trovato')
 

@@ -21,14 +21,14 @@ Per effettuare un download basta utilizzare il topic che si è trovato dopo la f
 ```console
 $ python3 tnt.py -d 1
 
-magnet:/?xt=urn:btih:...
+magnet:?xt=urn:btih:...
 ```
 
 ```console
 $ python3 tnt.py -d 1 2
 
-magnet:/?xt=urn:btih:1...
-magnet:/?xt=urn:btih:2...
+magnet:?xt=urn:btih:1...
+magnet:?xt=urn:btih:2...
 ```
 Ed ecco il magnet da utilizzare
 
@@ -42,12 +42,12 @@ $ python3 tnt.py -d 1 -qb -u 'admin' -pw 'adminadmin' -a '127.0.0.1' -p 8080
 Di default l'username è `admin`, la password `adminadmin`, l'indirizzo IP `127.0.0.1` e la porta utilizzata `8080`. Se le tue credenziali sono queste, ti basterà passare come argomento solo qb
 
 ```console
-$ python3 tnt.py -d 1 -qb 
+$ python3 tnt.py -d 1 -qb
 ```
 ### Telegram
 link: https://t.me/tntvillage_qb_bot
 
-Una volta avviato il bot con 
+Una volta avviato il bot con
 ```/start```
 puoi fare una ricerca utilizzando
 ```/search CONTENUTO DA CERCARE```,
